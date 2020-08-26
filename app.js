@@ -52,7 +52,20 @@ function manageEmployees() {
 function manageRoles() {
     inquirer.prompt(roleQuestions).then(res => {
         // console.log(res.role);
-        mainMenu();
+        switch(res.role) {
+            case "View All Roles":
+                viewRoles();
+                break;
+            case "Add Role":
+                addRole();
+                break;
+            case "Remove Role":
+                removeRole();
+            case "Return":
+            default:
+                mainMenu();
+                break;
+        }
     })
 }
 
