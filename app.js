@@ -300,5 +300,19 @@ function removeRole() {
     })
 }
 
+/////////////////////
+// MISC  FUNCTIONS //
+/////////////////////
+
+function validateSalary(salary) {
+    if (!isNan(salary.toFloat())) {
+        return true;
+    } else {
+        return "Please put in a valid number"
+    }
+}
+
+
+
 
 mainMenu()
