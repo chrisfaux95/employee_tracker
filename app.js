@@ -113,14 +113,6 @@ function viewAllEmployees() {
     });
 }
 
-function viewAllEmployeesByRole() {
-    let qStr = "SELECT employees.first_name, employees.last_name, roles.title FROM employees, roles ORDER BY role_id"
-    connection.query(qStr, (err, res) => {
-        if (err) console.log(err);
-        console.table(res);
-    })
-}
-
 function viewAllEmployeesByDept() {
     "SELECT employees.first_name, employees.last_name, roles.title FROM employees, roles ORDER BY role_id"
 }
