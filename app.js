@@ -1,5 +1,5 @@
 const inquirer = require("inquirer");
-const [mainMenuQuestions, employeesQuestions, roleQuestions, departmentQuestions] = require("./lib/questions");
+const { mainMenuQuestions, employeesQuestions, roleQuestions, departmentQuestions } = require("./lib/questions");
 
 function mainMenu() {
     inquirer.prompt(mainMenuQuestions).then(res => {
