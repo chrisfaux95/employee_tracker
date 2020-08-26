@@ -223,7 +223,9 @@ function viewRoles() {
     let qStr = "SELECT * FROM roles"
     connection.query(qStr, (err, res) => {
         if (err) console.log(err);
+        console.log("\n");
         console.table(res);
+        console.log("\n");
         manageRoles();
     })
 }
