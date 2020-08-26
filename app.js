@@ -121,6 +121,43 @@ function removeDepartment() {
 }
 
 
+///////////////////////////
+//    ROLE FUNCTIONS     //
+/////////////////////////// 
+
+function viewRoles() {
+    let qStr = "SELECT * FROM roles"
+    connection.query(qStr, (err, res) => {
+        if (err) console.log(err);
+        console.table(res);
+        manageRoles();
+    })
+}
+
+function addRole() {
+    inquirer.prompt([
+        {
+            name: "title",
+            type: "input",
+            message: "What is the role's title?"
+        },
+        {
+            name: "salary",
+            type: "input",
+            message: "What is the salary?"
+        },
+        {
+            name: "dept",
+            type: "list",
+            message: "What Department is it in?"
+        }
+    ]).then((ans) => {
+        let qStr = "INSERT INTO roles (title, salary, ) VALUES (?, ?, ?)";
+        connection.query(qStr, [title, salary, department_id], (err, res) => {
+            if (err) console.log(err);
+            // console.table(res);
+            console.log("Created New Role!")
+        })
     })
 }
 
