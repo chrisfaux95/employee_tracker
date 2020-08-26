@@ -58,7 +58,7 @@ function manageEmployees() {
 function manageRoles() {
     inquirer.prompt(roleQuestions).then(res => {
         // console.log(res.role);
-        switch(res.role) {
+        switch (res.role) {
             case "View All Roles":
                 viewRoles();
                 break;
@@ -114,7 +114,8 @@ function viewAllEmployees() {
 }
 
 function viewAllEmployeesByDept() {
-    "SELECT employees.first_name, employees.last_name, roles.title FROM employees, roles ORDER BY role_id"
+    let qStr = "SELECT employees.first_name, employees.last_name, roles.title FROM employees, roles ORDER BY role_id";
+    manageEmployees();
 }
 
 function addNewEmployee() {
@@ -156,7 +157,7 @@ function removeEmployee() {
         }).then((ans) => {
             let [last, first] = ans.employee.split(", ");
             let qStr = "DELETE FROM employees WHERE first_name=? AND last_name = ?";
-            connection.query(qStr, [first, last] , (err, res) => {
+            connection.query(qStr, [first, last], (err, res) => {
                 if (err) console.log(err);
                 console.log(res);
                 console.log("Deleted " + ans.employee);
@@ -186,7 +187,8 @@ function viewDepartments() {
     console.log("VIEWING");
     connection.query(qStr, (err, res) => {
         if (err) throw err;
-        console.log("VIEWING")
+        // console.log(res);
+        // console.log("--------\n")
         console.table(res);
         manageDepartments();
     })
