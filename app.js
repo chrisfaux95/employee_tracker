@@ -144,10 +144,25 @@ function addNewEmployee() {
 }
 
 function removeEmployee() {
-    inquirer.prompt({
-        name: "employee",
-        type: "list",
-        message: "Which Employee Would You Like To Remove?"
+    let qStr = "SELECT first_name, last_name FROM employees";
+    connection.query(qStr, (err, res) => {
+        if (err) throw err;
+        let choices = res.map(e => e.last_name + ", " + e.first_name);
+        inquirer.prompt({
+            name: "employee",
+            type: "list",
+            message: "Which Employee Would You Like To Remove?",
+            choices: choices
+        }).then((ans) => {
+            let [last, first] = ans.employee.split(", ");
+            let qStr = "DELETE FROM employees WHERE first_name=? AND last_name = ?";
+            connection.query(qStr, [first, last] , (err, res) => {
+                if (err) console.log(err);
+                console.log(res);
+                console.log("Deleted " + ans.employee);
+                manageEmployees()
+            })
+        })
     })
 }
 
