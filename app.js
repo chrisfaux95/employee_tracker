@@ -1,5 +1,9 @@
+// IMPORTING INQUIRER
 const inquirer = require("inquirer");
+// IMPORTING QUESTIONS
 const { mainMenuQuestions, employeesQuestions, roleQuestions, departmentQuestions } = require("./lib/questions");
+// IMPORTING MYSQL CONNECTION
+const connection = require("./lib/connection");
 
 function mainMenu() {
     inquirer.prompt(mainMenuQuestions).then(res => {
