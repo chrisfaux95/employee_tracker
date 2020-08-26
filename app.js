@@ -250,4 +250,27 @@ function addRole() {
 }
 
 
+function removeRole() {
+    let qStr = "SELECT title FROM roles";
+    connection.query(qStr, (err, res) => {
+        if (err) console.log(err);
+        let roles = res.map(e => e.title);
+        inquirer.prompt({
+            name: "role",
+            type: "list",
+            message: "Which Role would you like to remove?",
+            choices: roles
+        }).then((ans) => {
+            let qStr = "DELETE FROM roles WHERE title=?";
+            connection.query(qStr, ans.role, (err, res) => {
+                if (err) console.log(err);
+                console.log(res);
+                console.log("Deleted " + ans.role);
+                manageRoles();
+            })
+        })
+    })
+}
+
+
 mainMenu()
