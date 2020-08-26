@@ -6,6 +6,7 @@ const { mainMenuQuestions, employeesQuestions, roleQuestions, departmentQuestion
 const connection = require("./lib/connection");
 
 function mainMenu() {
+    console.log("\n")
     inquirer.prompt(mainMenuQuestions).then(res => {
         switch (res.questions) {
             case 'Manage Employees':
@@ -50,7 +51,7 @@ function manageEmployees() {
 
 function manageRoles() {
     inquirer.prompt(roleQuestions).then(res => {
-        console.log(res.role);
+        // console.log(res.role);
         mainMenu();
     })
 }
