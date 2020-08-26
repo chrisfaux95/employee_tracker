@@ -193,16 +193,23 @@ function viewDepartments() {
 }
 
 function removeDepartment() {
-    inquirer.prompt({
-        name: "dept",
-        type: "list",
-        message: "Which Department would you like to remove?",
-        choices: []
-    }).then((ans) => {
-        let qStr = "DELETE FROM departments WHERE name=?";
-        connection.query(qStr, name, (err, res) => {
-            if (err) console.log(err);
-            // console.table(res);
+    let qStr = "SELECT name FROM departments";
+    connection.query(qStr, (err, res) => {
+        if (err) console.log(err);
+        let choices = res.map(e => e.name)
+        inquirer.prompt({
+            name: "dept",
+            type: "list",
+            message: "Which Department would you like to remove?",
+            choices: choices
+        }).then((ans) => {
+            let qStr = "DELETE FROM departments WHERE name=?";
+            connection.query(qStr, ans.dept, (err, res) => {
+                if (err) console.log(err);
+                console.log(res);
+                console.log("Deleted " + ans.dept);
+                manageDepartments()
+            })
         })
     })
 }
