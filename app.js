@@ -30,8 +30,21 @@ function mainMenu() {
 
 function manageEmployees() {
     inquirer.prompt(employeesQuestions).then(res => {
-        console.log(res.employees);
-        mainMenu();
+        // console.log(res.employees);
+        switch (res.employees) {
+            case "View All Employees":
+                viewAllEmployees();
+                break;
+            case "Add Employee":
+                addNewEmployee();
+                break;
+            case "Remove Employee":
+                removeEmployee();
+                break;
+            default:
+                mainMenu();
+                break;
+        }
     })
 }
 
