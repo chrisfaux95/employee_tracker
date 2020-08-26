@@ -74,6 +74,53 @@ function manageDepartments() {
                 break;
         }
     })
+
+///////////////////////////
+// DEPARTMENT FUNCTIONS  //
+/////////////////////////// 
+
+function addDepartment() {
+    inquirer.prompt({
+        name: "dept",
+        type: "input",
+        message: "What is this new Department called?"
+    }).then((answer) => {
+        let qStr = "INSERT INTO departments (name) VALUE ?";
+        connection.query(qStr, answer.dept, (err, res) => {
+            if (err) throw err;
+            console.log(`New Department, ${answer.dept}, created.`);
+            manageDepartments();
+        })
+    })
+}
+
+function viewDepartments() {
+    let qStr = "SELECT * FROM departments";
+    console.log("VIEWING");
+    connection.query(qStr, (err, res) => {
+        if (err) throw err;
+        console.log("VIEWING")
+        console.table(res);
+        manageDepartments();
+    })
+}
+
+function removeDepartment() {
+    inquirer.prompt({
+        name: "dept",
+        type: "list",
+        message: "Which Department would you like to remove?",
+        choices: []
+    }).then((ans) => {
+        let qStr = "DELETE FROM departments WHERE name=?";
+        connection.query(qStr, name, (err, res) => {
+            if (err) console.log(err);
+            // console.table(res);
+        })
+    })
+}
+
+
     })
 }
 
