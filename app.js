@@ -154,14 +154,10 @@ function removeEmployee() {
 /////////////////////////// 
 
 function addDepartment() {
-    inquirer.prompt({
-        name: "dept",
-        type: "input",
-        message: "What is this new Department called?"
-    }).then((answer) => {
-        let qStr = "INSERT INTO departments (name) VALUE ?";
+    inquirer.prompt(newDeptQuestions).then((answer) => {
+        let qStr = "INSERT INTO departments (name) VALUE (?)";
         connection.query(qStr, answer.dept, (err, res) => {
-            if (err) throw err;
+            if (err) console.log(err);
             console.log(`New Department, ${answer.dept}, created.`);
             manageDepartments();
         })
