@@ -119,12 +119,12 @@ function viewAllEmployeesByDept() {
 
 function addNewEmployee() {
     inquirer.prompt([{
-        name: "firstName",
+        name: "first_name",
         type: "input",
         message: "What is their first name?"
     },
     {
-        name: "lastName",
+        name: "last_name",
         type: "input",
         message: "What is their last name?"
     },
@@ -132,13 +132,15 @@ function addNewEmployee() {
         name: "role_id",
         type: "input",
         message: "What is their role?"
-    },
-    {
-        name: "manager_id",
-        type: "input",
-        message: "Who is their manager?"
     }
-    ]).then()
+    ]).then((ans) => {
+        let qStr = "INSERT INTO employees (first_name, last_name, role_id) VALUE (?, ?, ?)";
+        connection.query(qStr, [ans.first_name, ans.last_name, ans.role_id], (err, res) => {
+            if (err) console.log(err);
+            console.log(`New Employee ${ans.first_name} ${ans.last_name} added`);
+            manageEmployees();
+        })
+    })
 }
 
 function removeEmployee() {
