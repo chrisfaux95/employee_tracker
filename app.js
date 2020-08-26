@@ -74,6 +74,68 @@ function manageDepartments() {
                 break;
         }
     })
+}
+///////////////////////////
+//  EMPLOYEE FUNCTIONS   //
+/////////////////////////// 
+
+function viewAllEmployees() {
+    let qStr = "SELECT employees.first_name, "
+    qStr += "employees.last_name, roles.title "
+    qStr += "FROM employees, roles WHERE employees.role_id "
+    qStr += "= roles.id"
+
+    connection.query(qStr, (err, res) => {
+        if (err) console.log(err);
+        console.log("\n")
+        console.table(res);
+        manageEmployees();
+    });
+}
+
+function viewAllEmployeesByRole() {
+    let qStr = "SELECT employees.first_name, employees.last_name, roles.title FROM employees, roles ORDER BY role_id"
+    connection.query(qStr, (err, res) => {
+        if (err) console.log(err);
+        console.table(res);
+    })
+}
+
+function viewAllEmployeesByDept() {
+    "SELECT employees.first_name, employees.last_name, roles.title FROM employees, roles ORDER BY role_id"
+}
+
+function addNewEmployee() {
+    inquirer.prompt([{
+        name: "firstName",
+        type: "input",
+        message: "What is their first name?"
+    },
+    {
+        name: "lastName",
+        type: "input",
+        message: "What is their last name?"
+    },
+    {
+        name: "role_id",
+        type: "input",
+        message: "What is their role?"
+    },
+    {
+        name: "manager_id",
+        type: "input",
+        message: "Who is their manager?"
+    }
+    ]).then()
+}
+
+function removeEmployee() {
+    inquirer.prompt({
+        name: "employee",
+        type: "list",
+        message: "Which Employee Would You Like To Remove?"
+    })
+}
 
 ///////////////////////////
 // DEPARTMENT FUNCTIONS  //
