@@ -206,27 +206,19 @@ function viewRoles() {
 
 function addRole() {
     inquirer.prompt([
+        ...newRoleQuestions,
         {
-            name: "title",
+            name: "department_id",
             type: "input",
-            message: "What is the role's title?"
-        },
-        {
-            name: "salary",
-            type: "input",
-            message: "What is the salary?"
-        },
-        {
-            name: "dept",
-            type: "list",
-            message: "What Department is it in?"
+            message: "What is the id of the Department it is in?"
         }
     ]).then((ans) => {
-        let qStr = "INSERT INTO roles (title, salary, ) VALUES (?, ?, ?)";
-        connection.query(qStr, [title, salary, department_id], (err, res) => {
+        let qStr = "INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)";
+        connection.query(qStr, [ans.title, ans.salary, ans.department_id], (err, res) => {
             if (err) console.log(err);
             // console.table(res);
             console.log("Created New Role!")
+            manageRoles();
         })
     })
 }
