@@ -21,7 +21,9 @@ function mainMenu() {
                 manageDepartments();
                 break;
             default:
-                console.log("END")
+                // console.log("END")
+                process.exit()
+                break;
         }
     })
 }
