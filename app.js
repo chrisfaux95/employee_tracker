@@ -57,8 +57,23 @@ function manageRoles() {
 
 function manageDepartments() {
     inquirer.prompt(departmentQuestions).then(res => {
-        console.log(res.departments);
-        mainMenu();
+        // console.log(res.departments);
+        switch (res.departments) {
+            case "View Departments":
+                // console.log("VIEWING");
+                viewDepartments();
+                break;
+            case "Add Departments":
+                addDepartment();
+                break;
+            case "Remove Departments":
+                removeDepartment();
+                break;
+            default:
+                mainMenu();
+                break;
+        }
+    })
     })
 }
 
