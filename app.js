@@ -249,6 +249,34 @@ function addRole() {
     })
 }
 
+function updateRoleSalary() {
+    let qStr = "SELECT title FROM roles";
+    connection.query(qStr, (err, res) => {
+        if (err) console.log(err);
+        let roles = res.map(e => e.title);
+        inquirer.prompt([{
+            name: "role",
+            type: "list",
+            message: "Which Role would you like to update?",
+            choices: roles
+        },
+        {
+            name: "salary",
+            type: "input",
+            message: "What Are You Changing it to?",
+            validate: validateSalary
+        }
+        ]).then((ans) => {
+            let qStr = "UPDATE roles SET Salary=? WHERE title=?";
+            connection.query(qStr, [ans.salary, ans.title], (err, res) => {
+                if (err) console.log(err);
+                console.log(res);
+                console.log("Updated " + ans.role);
+                manageRoles();
+            })
+        })
+    })
+}
 
 function removeRole() {
     let qStr = "SELECT title FROM roles";
