@@ -17,19 +17,20 @@ A Content Management System using a command line interface for organizing a comp
 
 ## Installation
  
-Clone this repo from github and run ```npm i``` to install the necessary dependencies 
+Clone this repo from github and run ```npm i``` to install the necessary dependencies.
+You will also need to initalize the mysql database using the provided database files in db.
 
 ---
 
 ## Usage
 
-```npm start``` will start up the prompts
+```npm start```
 
 ---
 
 ## Contributing
 
-*shrug*
+Feel free to fork it and suggest whatever changes/tweaks might work.
 
 ---
 
