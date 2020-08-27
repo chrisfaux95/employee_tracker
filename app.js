@@ -48,6 +48,13 @@ function manageEmployees() {
             case "Remove Employee":
                 removeEmployee();
                 break;
+            case "Update Employee Role":
+                updateEmployeeRole();
+                break;
+            case "Update Employee Manager":
+                updateEmployeeManager();
+                break;
+            case "Return":
             default:
                 mainMenu();
                 break;
@@ -67,6 +74,12 @@ function manageRoles() {
                 break;
             case "Remove Role":
                 removeRole();
+            case "Update Role Title":
+                updateRoleTitle();
+                break;
+            case "Update Role Salary":
+                updateRoleSalary();
+                break;
             case "Return":
             default:
                 mainMenu();
@@ -89,6 +102,10 @@ function manageDepartments() {
             case "Remove Departments":
                 removeDepartment();
                 break;
+            case "Update Department Name":
+                updateDeptName();
+                break;
+            case "Return":
             default:
                 mainMenu();
                 break;
@@ -119,6 +136,9 @@ function viewAllEmployeesByDept() {
 }
 
 function addNewEmployee() {
+
+
+
     inquirer.prompt([{
         name: "first_name",
         type: "input",
