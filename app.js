@@ -167,6 +167,45 @@ function removeEmployee() {
     })
 }
 
+function updateEmployeeRole() {
+    let qStr = "SELECT first_name, last_name FROM employees";
+    connection.query(qStr, (err, res) => {
+        if (err) throw err;
+        let employeeChoices = res.map(e => e.last_name + ", " + e.first_name);
+        let qStr = "SELECT title FROM roles ORDER BY id"
+        connection.query(qStr, (err, res) => {
+            if (err) console.log(err);
+            let roleChoices = res.map(e => e.title);
+            inquirer.prompt([
+                {
+                    name: "employee",
+                    type: "list",
+                    message: "Which employee would you like to update?",
+                    choices: employeeChoices
+                },
+                {
+                    name: "role",
+                    type: "list",
+                    message: "What is their new role?",
+                    choices: roleChoices,
+                    filter: (val) => {return roleChoices.indexOf(val)}
+                }
+            ]).then((ans) => {
+
+                let [last, first] = ans.employee.split(", ");
+                let qStr = "UPDATE employees SET role_id=? WHERE first_name=? AND last_name = ?";
+                connection.query(qStr, [role, first, last], (err, res) => {
+                    if (err) console.log(err);
+                    console.log(res);
+                    console.log("Updated " + ans.employee);
+                    manageEmployees()
+                })
+            })
+        })
+    })
+}
+
+
 ///////////////////////////
 // DEPARTMENT FUNCTIONS  //
 /////////////////////////// 
