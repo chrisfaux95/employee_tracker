@@ -188,7 +188,7 @@ function updateEmployeeRole() {
                     type: "list",
                     message: "What is their new role?",
                     choices: roleChoices,
-                    filter: (val) => {return roleChoices.indexOf(val)}
+                    filter: (val) => {return roleChoices.indexOf(val) + 1}
                 }
             ]).then((ans) => {
 
@@ -204,6 +204,39 @@ function updateEmployeeRole() {
         })
     })
 }
+
+function updateEmployeeManager() {
+    let qStr = "SELECT first_name, last_name FROM employees ORDER BY id";
+    connection.query(qStr, (err, res) => {
+        if (err) throw err;
+        let employeeChoices = res.map(e => e.last_name + ", " + e.first_name);
+        inquirer.prompt([
+            {
+                name: "employee",
+                type: "list",
+                message: "Which employee would you like to update?",
+                choices: employeeChoices,
+                filter: (val) => {return employeeChoices.indexOf(val) + 1}
+            },
+            {
+                name: "manager",
+                type: "list",
+                message: "Who is their new manager?",
+                choices: employeeChoices,
+                filter: (val) => {return employeeChoices.indexOf(val) + 1}
+            }
+        ]).then((ans) => {
+            let qStr = "UPDATE employees SET manager_id=? WHERE id=?";
+            connection.query(qStr, [manager, employee], (err, res) => {
+                if (err) console.log(err);
+                console.log(res);
+                console.log("Updated " + ans.employee);
+                manageEmployees()
+            })
+        })
+    })
+}
+
 
 
 ///////////////////////////
