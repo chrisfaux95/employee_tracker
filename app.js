@@ -216,6 +216,35 @@ function removeDepartment() {
     })
 }
 
+function updateDeptName() {
+    let qStr = "SELECT name FROM departments";
+    connection.query(qStr, (err, res) => {
+        if (err) console.log(err);
+        let choices = res.map(e => e.name)
+        inquirer.prompt([
+            {
+                name: "dept",
+                type: "list",
+                message: "Which Department would you like to update?",
+                choices: choices
+            },
+            {
+                name: "name",
+                type: "input",
+                message: "What would you like to change it to?"
+            }
+        ]).then((ans) => {
+            let qStr = "UPDATE departments SET name=? WHERE name=?";
+            connection.query(qStr, [ans.dept, ans.dept], (err, res) => {
+                if (err) console.log(err);
+                console.log(res);
+                console.log("Deleted " + ans.dept);
+                manageDepartments()
+            })
+        })
+    })
+}
+
 
 ///////////////////////////
 //    ROLE FUNCTIONS     //
@@ -269,7 +298,7 @@ function updateRoleTitle() {
         }
         ]).then((ans) => {
             let qStr = "UPDATE roles SET title=? WHERE title=?";
-            connection.query(qStr, [ans.salary, ans.title], (err, res) => {
+            connection.query(qStr, [ans.title, ans.title], (err, res) => {
                 if (err) console.log(err);
                 console.log(res);
                 console.log("Updated " + ans.role);
