@@ -136,30 +136,43 @@ function viewAllEmployeesByDept() {
 }
 
 function addNewEmployee() {
-
-
-
-    inquirer.prompt([{
-        name: "first_name",
-        type: "input",
-        message: "What is their first name?"
-    },
-    {
-        name: "last_name",
-        type: "input",
-        message: "What is their last name?"
-    },
-    {
-        name: "role_id",
-        type: "input",
-        message: "What is their role?"
-    }
-    ]).then((ans) => {
-        let qStr = "INSERT INTO employees (first_name, last_name, role_id) VALUE (?, ?, ?)";
-        connection.query(qStr, [ans.first_name, ans.last_name, ans.role_id], (err, res) => {
+    let qStr = "SELECT first_name, last_name FROM employees ORDER BY id";
+    connection.query(qStr, (err, res) => {
+        if (err) console.log(err);
+        let managerChoices = res.map(e => e.last_name + ", " + e.first_name);
+        let qStr = "SELECT title FROM roles ORDER BY id"
+        connection.query(qStr, (err, res) => {
             if (err) console.log(err);
-            console.log(`New Employee ${ans.first_name} ${ans.last_name} added`);
-            manageEmployees();
+            let roleChoices = res.map(e => e.title);
+            inquirer.prompt([...newEmployeeQuestions,
+                {
+                    name: "role",
+                    type: "list",
+                    message: "Which employee would you like to update?",
+                    choices: roleChoices,
+                    filter: (val) => {return roleChoices.indexOf(val) + 1}
+                },
+                {
+                    name: "manager",
+                    type: "list",
+                    message: "What is their new role?",
+                    choices: ["N/A" , ...managerChoices],
+                    filter: (val) => {return managerChoices.indexOf(val)}
+                }
+            ]).then((ans) => {
+                let qStr = "INSERT INTO employees (first_name, last_name, role_id) VALUE (?, ?, ?)";
+                let qArr = [ans.first_name, ans.last_name, ans.role];
+                if (ans.manager > 0) {
+                    qStr = "INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUE (?, ?, ?, ?)";
+                    qArr = [...qArr, ans.manager]
+                }
+                connection.query(qStr, qArr, (err, res) => {
+                    if (err) console.log(err);
+                    console.log(res);
+                    console.log("Added " + ans.first_name + " " + ans.last_name);
+                    manageEmployees()
+                })
+            })
         })
     })
 }
