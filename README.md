@@ -26,6 +26,19 @@ You will also need to initalize the mysql database using the provided database f
 
 ```npm start```
 
+Using the CLI will bring you to a main menu where you are able to select between managing employees, roles, or departments.
+
+![Main Menu](readme_assets/main_menu.png)
+
+
+### For example, managing departments looks like this:
+![Departments](readme_assets/departments.png)
+
+### Other Examples of the program running:
+
+![Updating Employee](readme_assets/update_employee.png)
+![Viewing All Employees](readme_assets/view_all.png)
+
 ---
 
 ## Contributing
