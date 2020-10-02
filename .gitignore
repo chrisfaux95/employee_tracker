@@ -3,3 +3,4 @@ test.js
 lib/employees.js
 lib/roles.js
 lib/departments.js
+.DS_Store
