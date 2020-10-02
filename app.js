@@ -224,14 +224,14 @@ function updateEmployeeRole() {
                     filter: (val) => {return roleChoices.indexOf(val) + 1}
                 }
             ]).then((ans) => {
-
+                let role = ans.role
                 let [last, first] = ans.employee.split(", ");
                 let qStr = "UPDATE employees SET role_id=? WHERE first_name=? AND last_name = ?";
                 connection.query(qStr, [role, first, last], (err, res) => {
                     if (err) console.log(err);
-                    console.log(res);
+                    // console.log(res);
                     console.log("Updated " + ans.employee);
-                    manageEmployees()
+                    manageEmployees();
                 })
             })
         })
